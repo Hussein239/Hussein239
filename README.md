@@ -3,7 +3,7 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 
 
 -- Functions
-_G.Key = "Rickscript"
+_G.Key = "BH"
 _G.KeyInput = "string"
 
 function DestroyGui()
@@ -16,7 +16,7 @@ end
 
 
 -- Creating Window
-local Window = OrionLib:MakeWindow({Name = "مفتاح ", HidePremium = false, IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "قناه تيليجرام/@BH_D1", HidePremium = false, IntroEnabled = false})
 
 
 -- Creating Tabs
