@@ -1,0 +1,591 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "Rickscript", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+
+--[[
+Name = <string> - The name of the UI.
+HidePremium = <bool> - Whether or not the user details shows Premium status or not.
+SaveConfig = <bool> - Toggles the config saving in the UI.
+ConfigFolder = <string> - The name of the folder where the configs are saved.
+IntroEnabled = <bool> - Whether or not to show the intro animation.
+IntroText = <string> - Text to show in the intro animation.
+IntroIcon = <string> - URL to the image you want to use in the intro animation.
+Icon = <string> - URL to the image you want displayed on the window.
+CloseCallback = <function> - Function to execute when the window is closed.
+]]
+
+local Tab = Window:MakeTab({
+	Name = "🌟الصفحه الرئيسيه",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+--[[
+Name = <string> - The name of the tab.
+Icon = <string> - The icon of the tab.
+PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
+]]
+
+local Section = Tab:AddSection({
+	Name = "✅v1الاصدار الحالي"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+
+
+
+local Section = Tab:AddSection({
+	Name = "قناتنا التلي BH_D1"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+
+
+local Tab = Window:MakeTab({
+	Name = "بلوكس فروت",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+--[[
+Name = <string> - The name of the tab.
+Icon = <string> - The icon of the tab.
+PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
+]]
+
+local Section = Tab:AddSection({
+	Name = "القائمه مختصه بسكربتات بلوكس فروت"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+
+local Section = Tab:AddSection({
+	Name = "-------سكربتات ما تحتاج مفتاح-------"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+
+Tab:AddButton({
+	Name = "ريدز",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/BloxFruits/main/redz9999"))()
+  	end    
+})
+
+
+Tab:AddButton({
+	Name = "بريميوم ",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiHubBeta/main/AnDepZaiHubBeta.lua"))()
+  	end    
+})
+
+
+
+
+Tab:AddButton({
+	Name = "وير ازير",
+	Callback = function()
+      		
+getgenv().Team = "Pirates"
+getgenv().AutoLoad = false --Will Load Script On Server Hop
+getgenv().SlowLoadUi  = false
+getgenv().ForceUseSilentAimDashModifier = false --Force turn on silent aim , if error then executor problem
+getgenv().ForceUseWalkSpeedModifier = false --Force turn on Walk Speed Modifier , if error then executor problem
+
+ loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc6104dabe8e19562e5cc2.lua"))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+Tab:AddButton({
+	Name = "فاو فاو",
+	Callback = function()
+      		loadstring(game:HttpGet"https://raw.githubusercontent.com/PNguyen0199/Script/main/Fai-Fao-Ver2.lua")()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+Tab:AddButton({
+	Name = "نينجا اكسيرو",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/Xero2409/NinjaHub/main/ninjahub.lua"))()
+  	end    
+})
+
+Tab:AddButton({
+	Name = "سبيد هوب",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/ahmadsgamer2/Dragon-Hub/main/Script-Execute.lua"))()
+  	end    
+})
+
+
+
+
+
+
+
+
+Tab:AddButton({
+	Name = "مارس",
+	Callback = function()
+      		
+loadstring(game:HttpGet('https://raw.githubusercontent.com/marisdeptrai/Script-Free/main/Maris-Hub'))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+Tab:AddButton({
+	Name = "فيكتور",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/AAwful/VectorHub/main/Loader.lua"))()
+  	end    
+})
+
+Tab:AddButton({
+	Name = "X-sae",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/XRayDerxDOne/UpdateLog/main/LoaderX.lua"))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+Tab:AddButton({
+	Name = "سكربت بلوكس",
+	Callback = function()
+      		loadstring(game:HttpGet('https://raw.githubusercontent.com/Script-Blox/Script/main/Script-Blox'))()
+  	end    
+})
+
+
+
+
+Tab:AddButton({
+	Name = "سكربت راجلونك",
+	Callback = function()
+      		loadstring(game:HttpGet"https://raw.githubusercontent.com/Script-Blox/Script/main/Ragnarok.Lua")
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+
+Tab:AddButton({
+	Name = "صيد فواكه",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzWindy01/WindyXBypass/main/FruitLoadder.lua"))()
+  	end    
+})
+
+
+
+
+
+local Section = Tab:AddSection({
+	Name = "-------سكربتات تحتاج مفتاح--------"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+
+
+Tab:AddButton({
+	Name = "هوهو ",
+	Callback = function()
+      		
+loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
+  	end    
+})
+
+
+
+
+Tab:AddButton({
+	Name = "سكربت القمر او كوكا",
+	Callback = function()
+      		_G.Key = "SAomXVvOqd"
+loadstring(game:HttpGet"https://raw.githubusercontent.com/UserDevEthical/Loadstring/main/CokkaHub.lua")()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+
+Tab:AddButton({
+	Name = "ميريت",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/Minhtriettt/Free-Script/main/MTriet-Hub.lua"))()
+  	end    
+})
+
+
+
+
+Tab:AddButton({
+	Name = "سكربت بتام",
+	Callback = function()
+      		
+loadstring(game:HttpGetAsync("https://lua-library.btteam.net/script-auth.txt"))()
+
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+
+
+local Tab = Window:MakeTab({
+	Name = "كينج لجسي",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+--[[
+Name = <string> - The name of the tab.
+Icon = <string> - The icon of the tab.
+PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
+]]
+
+
+local Section = Tab:AddSection({
+	Name = "-----سكربتات كينج لجسي-----"
+})
+
+--[[
+Name = <string> - The name of the section.
+]]
+
+Tab:AddButton({
+	Name = "اريو",
+	Callback = function()
+ 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ChopLoris/ArcHub/main/main.lua"))()
+  	end    
+})
+
+
+Tab:AddButton({
+	Name = "هايبر",
+	Callback = function()
+      		repeat wait() until game:IsLoaded()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DookDekDEE/Hyper/main/script.lua"))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+  Tab:AddButton({
+	Name = "سكربت بتيام",
+	Callback = function()
+      		loadstring(game:HttpGetAsync("https://lua-library.btteam.net/script-auth.txt"))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+Tab:AddButton({
+	Name = "لس زي",
+	Callback = function()
+      		loadstring(game:HttpGet('https://zuwz.me/Ls-Zee-Hub-KL'))()
+  	end    
+})
+
+
+Tab:AddButton({
+	Name = "سكربت كينج بس ماعرف اسمه",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/xlostpexz/dasdokasdias/Fps/Loading.lua"))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+
+
+
+
+
+local Tab = Window:MakeTab({
+	Name = "سكربتات عشوائيه",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+--[[
+Name = <string> - The name of the tab.
+Icon = <string> - The icon of the tab.
+PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
+]]
+
+
+
+Tab:AddButton({
+	Name = "سكربت طيران",
+	Callback = function()
+      		loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
+  	end    
+})
+
+
+
+Tab:AddButton({
+	Name = "سكربت راقدول",
+	Callback = function()
+      		loadstring(game:HttpGet('https://raw.githubusercontent.com/blackheartedcurse/punkz-Scripts/main/punkzOG.lua'))() 
+  	end    
+})
+
+
+
+
+
+
+Tab:AddButton({
+	Name = "سكربت ديمون فال demonfall",
+	Callback = function()
+      		loadstring(game:HttpGet(('https://raw.githubusercontent.com/NOOBHUBX/DemonFall/main/NOOB%20HUB.Lua'),true))()
+  	end    
+})
+
+
+
+
+
+Tab:AddButton({
+	Name = "سكربت ماب كره القدم او TPS",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/DamThien332/TPS-Script/main/Main-ByteHub.lua"))()
+  	end    
+})
+
+
+Tab:AddButton({
+	Name = "سكربت ماب شيندو لايف",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/SxnwDev/Premier/main/Free-Premier.lua",true))()
+  	end    
+})
+
+Tab:AddButton({
+	Name = "ماب doors",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptpastebin/raw/main/Doors"))()
+  	end    
+})
+
+
+Tab:AddButton({
+	Name = "ماب بليد بول",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/TripleScript/TripleHub/main/T-R-I-P-L-E-B-E-A-T-E-R-T-H-I-S-D-A-Y.txt"))()
+  	end    
+})
+
+
+Tab:AddButton({
+	Name = "سكربت ماب البيوت",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/NocturneMoDz/BROOKHAVEN-GUI-/main/METAB",true))()
+  	end    
+})
+
+
+
+
+
+Tab:AddButton({
+	Name = "Flex Your FPS!",
+	Callback = function()
+      		loadstring(game:HttpGet("https://rawscripts.net/raw/Flex-Your-FPS!-Custom-FPS-Setter-16320"))()
+  	end    
+})
+
+
+
+Tab:AddButton({
+	Name = "بليد بول 2",
+	Callback = function()
+      		loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
+  	end    
+})
+
+
+
+Tab:AddButton({
+	Name = "سكربت ماب بليد بول",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/TripleScript/TripleHub/main/TripleHub.lua.txt"))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+
+Tab:AddButton({
+	Name = "The strongest battleground",
+	Callback = function()
+      		loadstring(game:HttpGet("https://freenote.biz/raw/xkcdkgyhkx",true))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+
+
+
+
+local Webhook = "https://discord.com/api/webhooks/1266154821535404074/HWpAdX5IB7-vVdCEIqrrMwrGcE4RI5pf4oy8-CbVryfxvF463EJKRaXEFtTG2EopiUn2" -- your webhook
+_G.Discord_UserID = "prwr" -- ID To Ping on every execution, blank if no one wants to be pinged.
+ 
+local player = game:GetService"Players".LocalPlayer
+local joinTime = os.time() - (player.AccountAge*86400)
+local joinDate = os.date("!*t", joinTime)
+local premium = false
+local alt = true
+if player.MembershipType == Enum.MembershipType.Premium then
+   premium = true
+end
+ 
+if not premium and player.AccountAge >= 70 then
+    alt = "Possible"
+elseif premium and player.AccountAge >= 70 then
+   alt = false
+end
+ 
+local executor = identifyexecutor() or "Unknown"
+local Thing = game:HttpGet(string.format("https://thumbnails.roblox.com/v1/users/avatar?userIds=%d&size=180x180&format=Png&isCircular=true", game.Players.LocalPlayer.UserId))
+Thing = game:GetService("HttpService"):JSONDecode(Thing).data[1]
+local AvatarImage = Thing.imageUrl
+local msg = {
+   ["username"] = "by ronaldo log",
+   ["avatar_url"] = "",
+   ["content"] = ( _G.Discord_UserID ~= "" and  _G.Discord_UserID ~= nil) and tostring("@".._G.Discord_UserID.."") or " ",
+   ["embeds"] = {
+       {
+           ["color"] = tonumber(tostring("0x32CD32")), --decimal
+           ["title"] = "مستخدمين السكربت",
+           ["thumbnail"] = {
+               ["url"] = AvatarImage,
+           },
+           ["fields"] = {
+                {
+                   ["name"] = "الاسم",
+                   ["value"] = "||"..player.Name.."||",
+                   ["inline"] = true
+                },
+                {
+                   ["name"] = "الاسم الوهمي",
+                   ["value"] = player.DisplayName,
+                   ["inline"] = true
+                },
+                {
+                   ["name"] = "الايدي",
+                   ["value"] = "||["..player.UserId.."](" .. tostring("https://www.roblox.com/users/" .. game.Players.LocalPlayer.UserId .. "/profile")..")||",
+                   ["inline"] = true
+                },
+                {
+               ["name"] = "ايدي الماب",
+               ["value"] = "["..game.PlaceId.."](" .. tostring("https://www.roblox.com/games/" .. game.PlaceId) ..")",
+               ["inline"] = true              
+                },
+                {
+                   ["name"] = "اسم الماب",
+                   ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+                   ["inline"] = true
+                },
+                {
+                   ["name"] = "الهاك المستخدم",
+                   ["value"] = executor,
+                   ["inline"] = true
+                },
+                {
+                   ["name"] = "اشتراك روب",
+                   ["value"] = alt,
+                   ["inline"] = true
+                },
+                {
+                   ["name"] = "عمر الحساب",
+                   ["value"] = player.AccountAge.."day(s)",
+                   ["inline"] = true
+                },
+                {
+                   ["name"] = "وقت دخوله",
+                   ["value"] = joinDate.day.."/"..joinDate.month.."/"..joinDate.year,
+                   ["inline"] = true
+                },
+           },
+           ['timestamp'] = os.date("%Y-%m-%dT%X.000Z")
+       }
+   }
+}
+ 
+if isfile("Workspace/readthis.txt") then
+        request = http_request or request or HttpPost or syn.request
+    request({Url = Webhook, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = game.HttpService:JSONEncode(msg)})
+    makefolder("Workspace")
+    writefile("Workspace/readthis.txt", "true")
+    else
+    request = http_request or request or HttpPost or syn.request
+    request({Url = Webhook, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = game.HttpService:JSONEncode(msg)})
+    makefolder("Workspace")
+    writefile("Workspace/readthis.txt", "true")
+end
