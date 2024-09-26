@@ -65,4 +65,42 @@ function MyUILib:AddButton(frame, buttonText, callback)
     end)
 end
 
+-- إضافة قائمة ومحتوى القائمة مع زر العودة
+function MyUILib:AddMenu(frame, menuTitle)
+    local MenuFrame = Instance.new("Frame")
+    MenuFrame.Parent = frame
+    MenuFrame.Size = UDim2.new(1, 0, 1, -50)
+    MenuFrame.Position = UDim2.new(0, 0, 0, 50)
+    MenuFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    MenuFrame.Visible = false -- اخفاء القائمة في البداية
+
+    local MenuTitle = Instance.new("TextLabel")
+    MenuTitle.Parent = MenuFrame
+    MenuTitle.Size = UDim2.new(1, 0, 0, 50)
+    MenuTitle.Position = UDim2.new(0, 0, 0, 0)
+    MenuTitle.Text = menuTitle
+    MenuTitle.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+    MenuTitle.TextColor3 = Color3.new(1, 1, 1)
+    MenuTitle.Font = Enum.Font.SourceSans
+    MenuTitle.TextSize = 24
+
+    -- زر العودة إلى القائمة الأساسية
+    local BackButton = Instance.new("TextButton")
+    BackButton.Parent = MenuFrame
+    BackButton.Size = UDim2.new(0, 200, 0, 50)
+    BackButton.Position = UDim2.new(0.5, -100, 0.5, 50)
+    BackButton.Text = "رجوع إلى القائمة الأساسية"
+    BackButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+    BackButton.TextColor3 = Color3.new(1, 1, 1)
+    BackButton.Font = Enum.Font.SourceSans
+    BackButton.TextSize = 20
+
+    BackButton.MouseButton1Click:Connect(function()
+        MenuFrame.Visible = false -- اخفاء القائمة
+        frame.Visible = true -- إظهار القائمة الأساسية
+    end)
+
+    return MenuFrame
+end
+
 return MyUILib
