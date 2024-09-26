@@ -16,6 +16,8 @@ function MyUILib:CreateWindow(title)
     MainFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
     MainFrame.Size = UDim2.new(0, 400, 0, 300)
     MainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+    MainFrame.Active = true
+    MainFrame.Draggable = true -- جعل الواجهة قابلة للتحريك
 
     -- إعدادات الـ Title
     Title.Name = "Title"
@@ -26,42 +28,21 @@ function MyUILib:CreateWindow(title)
     Title.TextColor3 = Color3.new(1, 1, 1)
     Title.Font = Enum.Font.SourceSans
     Title.TextSize = 24
-    
-    -- السماح بسحب الإطار
-    local dragging
-    local dragInput
-    local dragStart
-    local startPos
 
-    local function update(input)
-        local delta = input.Position - dragStart
-        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
+    -- زر أيقونة لإظهار/إخفاء الواجهة
+    local ToggleButton = Instance.new("TextButton")
+    ToggleButton.Parent = ScreenGui
+    ToggleButton.Size = UDim2.new(0, 50, 0, 50)
+    ToggleButton.Position = UDim2.new(0, 10, 0.5, -25) -- على يسار الشاشة
+    ToggleButton.Text = "🔧" -- رمز الأيقونة
+    ToggleButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    ToggleButton.TextColor3 = Color3.new(1, 1, 1)
 
-    MainFrame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            dragStart = input.Position
-            startPos = MainFrame.Position
-
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    MainFrame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement then
-            dragInput = input
-        end
-    end)
-
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            update(input)
-        end
+    -- إظهار/إخفاء الواجهة عند الضغط على الأيقونة
+    local isVisible = true
+    ToggleButton.MouseButton1Click:Connect(function()
+        isVisible = not isVisible
+        MainFrame.Visible = isVisible
     end)
 
     return MainFrame
