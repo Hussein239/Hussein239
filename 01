@@ -2,7 +2,7 @@ return {
     ["counter (OFF)"] = "عداد (إيقاف)",
     ["Toggles the damage counter"] = "يبدل عداد الضرر",
     ["Enable PvP"] = "تفعيل PvP",
-    ["Servers"] = "😅الخوادم",
+    ["Servers"] = "الخوادم",
     ["Materials have been disabled."] = "تم تعطيل المواد.",
     ["Enables PvP back after dying In Combat."] = "يمكن تفعيل PvP مرة أخرى بعد الموت في القتال.",
     ["Walk"] = "المشي",
