@@ -135,9 +135,7 @@ return {
     ["Dragon Fruit"] = "فاكهة التنين",
     ["Leopard Fruit"] = "فاكهة الفهد",
     ["Kitsune Fruit"] = "فاكهة الكيتسوني",
-    
--- إضافة أسماء السيوف الجديدة
-    
+
 ["Tushita"] = "توشيتا",
 ["True Triple Katana"] = "كاتانا ثلاثية حقيقية",
 ["Cursed Dual Katana"] = "كاتانا مزدوجة ملعونة",
