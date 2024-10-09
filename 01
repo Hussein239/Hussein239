@@ -236,20 +236,4 @@ return {
     ["Teach"] = "تيتش",
     ["Marine"] = "بحرية",
    ["Pirate"] = "قرصان",
-["ITEMS"] = "الأغراض",
-["search keyword"] = "ابحث عن كلمة مفتاحية",
-["Mythical Sword"] = "سيف أسطوري",
-["Revolving Ravager"] = "المعذب الدوار",
-["Slayer of Goliath"] = "قاتل الجبار",
-["Unequip"] = "إلغاء التجهيز",
-["Servers"] = "الخوادم",
-["Instinct"] = "غريزة",
-["Aura"] = "هالة",
-["Flash Step"] = "خطوة فلاش",
-["Version"] = "الإصدار",
-["Menu"] = "القائمة",
-["Bash"] = "ضربة",
-["Walk"] = "المشي",
-["QUEST"] = "مهمة"
-
 }
