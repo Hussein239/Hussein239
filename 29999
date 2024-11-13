@@ -213,33 +213,33 @@ return {
 ["Refund"] = "استرجاع",
 
   -- التحديث الجديد 
-["Blox Fruit Dealer"] = "بائع فاكهة بلوكس"،
-["Continue"] = "استمر"،
-["Zioles"] = "زيولس"،
-["Alright"] = "حسنًا"،
-["Random Fruit"] = "فاكهة عشوائية"،
-["Top Honor"] = "أعلى شرف"،
-["Talk"] = "تحدث"،
-["Mysterious Scientist"] = "عالم غامض"،
-["LOCKED"] = "مقفل"،
-["Normal"] = "عادي"،
-["Trade/Buy"] = "تجارة/شراء"،
-["Use"] = "استخدم"،
-["CONFIRM"] = "تأكيد"،
-["Purchase this product for yourself or for a friend?"] = "هل ترغب بشراء هذا المنتج لنفسك أو لصديق؟"،
-["CANCEL"] = "إلغاء"،
-["GIFT"] = "هدية"،
-["BUY"] = "شراء"،
-["ALLIES"] = "الحلفاء"،
-["PLAYERS"] = "اللاعبين"،
-["REQUESTS"] = "الطلبات"،
-["ALLIED PLAYERS"] = "اللاعبون المتحالفون"،
-["Click on a player to send them an ally request."] = "انقر على لاعب لإرسال طلب تحالف له."،
-["Health"] = "الصحة"،
-["Energy"] = "الطاقة"،
-["Eat"] = "كل"،
-["Drop"] = "إسقاط"،
-["Store"] = "خزن".
-
+["Blox Fruit Dealer"] = "بائع فاكهة بلوكس",  
+["Continue"] = "استمر",  
+["Zioles"] = "زيولس",  
+["Alright"] = "حسنًا",  
+["Random Fruit"] = "فاكهة عشوائية",  
+["Top Honor"] = "أعلى شرف",  
+["Talk"] = "تحدث",  
+["Mysterious Scientist"] = "عالم غامض",  
+["LOCKED"] = "مقفل",  
+["Normal"] = "عادي",  
+["Trade/Buy"] = "تجارة/شراء",  
+["Use"] = "استخدم",  
+["CONFIRM"] = "تأكيد",  
+["Purchase this product for yourself or for a friend?"] = "هل ترغب بشراء هذا المنتج لنفسك أو لصديق؟",  
+["CANCEL"] = "إلغاء",  
+["GIFT"] = "هدية",  
+["BUY"] = "شراء",  
+["ALLIES"] = "الحلفاء",  
+["PLAYERS"] = "اللاعبين",  
+["REQUESTS"] = "الطلبات",  
+["ALLIED PLAYERS"] = "اللاعبون المتحالفون",  
+["Click on a player to send them an ally request."] = "انقر على لاعب لإرسال طلب تحالف له",  
+["Health"] = "الصحة",  
+["Energy"] = "الطاقة",  
+["Eat"] = "كل",  
+["Drop"] = "إسقاط",  
+["Store"] = "خزن",  
+["Refund"] = "استرجاع",
 
 }
