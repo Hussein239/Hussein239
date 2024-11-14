@@ -23,8 +23,51 @@ return {
     ["Monkeys"] = "قرود",
     ["Gorillas"] = "غوريلات",
     ["Gorilla King"] = "ملك الغوريلات",
-    
-    -- الفواكه
+
+    -- 1الفواكه
+
+    ["Rocket"] = "صاروخ",
+    ["Spin"] = "دوران",
+    ["Chop"] = "تقطيع",
+    ["Spring"] = "ربيع",
+    ["Bomb"] = "قنبلة",
+    ["Smoke"] = "دخان",
+    ["Spike"] = "شوكة",
+    ["Flame"] = "لهب",
+    ["Falcon"] = "صقر",
+    ["Ice"] = "ثلج",
+    ["Sand"] = "رمل",
+    ["Dark"] = "ظلام",
+    ["Diamond"] = "ألماس",
+    ["Light"] = "ضوء",
+    ["Rubber"] = "مطاط",
+    ["Barrier"] = "حاجز",
+    ["Ghost"] = "شبح",
+    ["Magma"] = "حمم",
+    ["Quake"] = "زلزال",
+    ["Buddha"] = "بوذا",
+    ["Love"] = "حب",
+    ["Spider"] = "عنكبوت",
+    ["Sound"] = "صوت",
+    ["Phoenix"] = "عنقاء",
+    ["Portal"] = "بوابة",
+    ["Rumble"] = "زئير",
+    ["Pain"] = "ألم",
+    ["Blizzard"] = "عاصفة ثلجية",
+    ["Gravity"] = "جاذبية",
+    ["Mammoth"] = "ماموث",
+    ["T-Rex"] = "تريكس",
+    ["Dough"] = "عجين",
+    ["Shadow"] = "ظل",
+    ["Venom"] = "سم",
+    ["Control"] = "تحكم",
+    ["Spirit"] = "روح",
+    ["Dragon"] = "تنين",
+    ["Leopard"] = "فهد",
+    ["Kitsune"] = "كيتسوني",
+
+
+    -- 2الفواكه
     ["Common Blox Fruit"] = "فاكهة بلوكس شائعة",
     ["Uncommon Blox Fruit"] = "فاكهة بلوكس غير شائعة",
     ["Rare Blox Fruit"] = "فاكهة بلوكس نادرة",
@@ -241,9 +284,6 @@ return {
 ["Drop"] = "إسقاط",  
 ["Store"] = "خزن",  
 ["Refund"] = "استرجاع",
-
-["Hello, I'm Zioles. I sell random physical fruits to people once every 2 hours. Keep in mind, the higher your level is, the more it'll cost you!"] = "مرحباً، أنا زيولس. أبيع فواكه عشوائية للأشخاص كل ساعتين. ضع في بالك، كلما كان مستواك أعلى، ستكون التكلفة أكبر!",
-
 
 
 }
