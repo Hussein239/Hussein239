@@ -1,0 +1,111 @@
+-- تحميل جدول الترجمات من رابط خارجي
+local translations = loadstring(game:HttpGet("https://raw.githubusercontent.com/Hussein239/Hussein239/refs/heads/main/29999"))()
+
+-- التحقق من تحميل الترجمات
+if not translations or type(translations) ~= "table" then
+    warn("Failed to load translations. Please check the URL or content.")
+    return
+end
+
+-- دالة لترجمة النصوص
+local function translateText(originalText)
+    return translations[originalText] or originalText
+end
+
+-- دالة لمراقبة النصوص وتحديثها عند التغيير
+local function monitorTextChange(object)
+    if object:IsA("TextLabel") or object:IsA("TextButton") or object:IsA("TextBox") then
+        -- ترجمة النص الحالي فوراً
+        object.Text = translateText(object.Text)
+        
+        -- مراقبة تغييرات النص
+        object:GetPropertyChangedSignal("Text"):Connect(function()
+            object.Text = translateText(object.Text)
+        end)
+    end
+end
+
+-- دالة لمراقبة جميع الكائنات داخل عنصر معين
+local function monitorObjectsInContainer(container)
+    for _, object in ipairs(container:GetDescendants()) do
+        monitorTextChange(object)
+    end
+
+    -- مراقبة الكائنات الجديدة عند إضافتها
+    container.DescendantAdded:Connect(function(object)
+        monitorTextChange(object)
+    end)
+end
+
+-- دالة لمراقبة واجهة المستخدم لكل لاعب
+local function monitorPlayerGui(player)
+    local playerGui = player:FindFirstChild("PlayerGui")
+    if playerGui then
+        monitorObjectsInContainer(playerGui)
+    end
+
+    -- مراقبة إضافة PlayerGui لاحقاً
+    player.ChildAdded:Connect(function(child)
+        if child.Name == "PlayerGui" then
+            monitorObjectsInContainer(child)
+        end
+    end)
+end
+
+-- دالة لمراقبة جميع اللاعبين الحاليين والجدد
+local function monitorAllPlayers()
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        monitorPlayerGui(player)
+    end
+
+    -- مراقبة اللاعبين الجدد
+    game.Players.PlayerAdded:Connect(function(player)
+        monitorPlayerGui(player)
+    end)
+end
+
+-- دالة لإظهار الإشعارات
+local function showNotification(message, duration)
+    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    local screenGui = Instance.new("ScreenGui", playerGui)
+    screenGui.Name = "Notification"
+    
+    local textLabel = Instance.new("TextLabel", screenGui)
+    textLabel.Size = UDim2.new(0, 400, 0, 50)
+    textLabel.Position = UDim2.new(0.5, -200, 0, 10)
+    textLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+    textLabel.BackgroundTransparency = 0.7
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.Font = Enum.Font.GothamBold
+    textLabel.TextSize = 28
+    textLabel.Text = message
+    
+    -- إخفاء الإشعار بعد مدة محددة
+    task.delay(duration, function()
+        local tween = game.TweenService:Create(textLabel, TweenInfo.new(1), {TextTransparency = 1, BackgroundTransparency = 1})
+        tween:Play()
+        tween.Completed:Connect(function()
+            screenGui:Destroy()
+        end)
+    end)
+end
+
+-- دالة لإظهار الإشعار الأول عند بدء التشغيل
+local function showStartNotification()
+    showNotification("تم تشغيل الترجمة بنجاح", 3)
+end
+
+-- دالة لإظهار الإشعار الثاني بشكل دوري
+local function showDeveloperNotification()
+    while task.wait(1200) do -- 1200 ثانية = 20 دقيقة
+        showNotification("مطور السكربت / @BH_D1", 6)
+    end
+end
+
+-- تنفيذ الوظائف
+monitorObjectsInContainer(workspace)
+monitorAllPlayers()
+showStartNotification()
+
+-- بدء إشعار المطور بشكل دوري
+task.spawn(showDeveloperNotification)
