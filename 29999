@@ -282,8 +282,24 @@ return {
 ["Energy"] = "الطاقة",  
 ["Eat"] = "كل",  
 ["Drop"] = "إسقاط",  
-["Store"] = "خزن",  
+["Store"] = "تخزن",  
 ["Refund"] = "استرجاع",
 
+--ازرار جانبي 
+["Elite Hüntenter"] = "الصياد النخبة",  
+["Yeah"] = "نعم",  
+["Progress"] = "التقدم",  
+["Alucard Fragment"] = "شظية ألوكارد",  
+["Azure Ember"] = "جمرة زرقاء",  
+["Dark Fragment"] = "شظية الظلام",  
+["Material"] = "مادة",  
+["Mythical Material"] = "مادة أسطورية",  
+["A fragment of the legendary Alucard Gem, said to grant the user immense power."] = "جزء من جوهرة ألوكارد الأسطورية، يُقال إنها تمنح المستخدم قوة هائلة.",  
+["Mythical Sword"] = "السيف الأسطوري",  
+["Equip"] = "تجهيز",  
+["Storage"] = "المخزن",  
+["Unstore"] = "إخراج من المخزن",  
+["Unequip"] = "إلغاء التجهيز",  
+["Cursed Dual Katana"] = "الكاتانا المزدوجة الملعونة",
 
 }
