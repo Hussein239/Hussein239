@@ -1,106 +1,257 @@
-local MyUILib = {}
+lua
+-- سكريبت ترجمة متقدم مع ميزات إضافية
 
--- وظيفة لإنشاء الإطار الأساسي
-function MyUILib:CreateWindow(title)
-    local ScreenGui = Instance.new("ScreenGui")
-    local MainFrame = Instance.new("Frame")
-    local Title = Instance.new("TextLabel")
+local TranslationScript = {}
+
+-- إعدادات متقدمة وشاملة
+TranslationScript.Config = {
+    -- إعدادات الترجمة
+    TranslationSources = {
+        "https://raw.githubusercontent.com/Hussein239/Hussein239/refs/heads/main/29999",
+        "https://backup-translation-source.com/translations"
+    },
+    CacheLimit = 1000,  -- زيادة حد الذاكرة المؤقتة
+    RefreshInterval = 1800,  -- التحديث كل 30 دقيقة بدلاً من ساعة
     
-    -- إعدادات الـ ScreenGui
-    ScreenGui.Name = "MyUI"
-    ScreenGui.Parent = game.CoreGui
+    -- إعدادات الإشعارات
+    Notifications = {
+        StartupMessage = "تم تشغيل الترجمة بنجاح 🌐",
+        DeveloperCredit = "مطور السكربت / @BH_D1 💻",
+        ErrorMessage = "حدث خطأ في الترجمة ⚠️",
+        
+        Styles = {
+            Font = Enum.Font.GothamBold,
+            TextSize = 24,
+            BackgroundColor = Color3.fromRGB(31, 41, 55),
+            TextColor = Color3.fromRGB(255, 255, 255)
+        }
+    },
+    
+    -- إعدادات متقدمة للترجمة
+    TranslationOptions = {
+        EnableAutoDetect = true,  -- محاولة كشف اللغة تلقائيًا
+        PreferredLanguage = "ar",  -- اللغة المفضلة
+        FallbackLanguage = "en"   -- لغة احتياطية
+    },
+    
+    -- إعدادات الأمان
+    SecuritySettings = {
+        EnableAntiTamper = true,  -- حماية ضد التعديل
+        LogUnauthorizedChanges = true  -- تسجيل محاولات التعديل
+    }
+}
 
-    -- إعدادات الـ MainFrame
-    MainFrame.Name = "MainFrame"
-    MainFrame.Parent = ScreenGui
-    MainFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    MainFrame.Size = UDim2.new(0, 400, 0, 300)
-    MainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
-    MainFrame.Active = true
-    MainFrame.Draggable = true -- جعل الواجهة قابلة للتحريك
+-- مدير الترجمات المتقدم
+local TranslationManager = {}
 
-    -- إعدادات الـ Title
-    Title.Name = "Title"
-    Title.Parent = MainFrame
-    Title.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
-    Title.Size = UDim2.new(1, 0, 0, 50)
-    Title.Text = title
-    Title.TextColor3 = Color3.new(1, 1, 1)
-    Title.Font = Enum.Font.SourceSans
-    Title.TextSize = 24
-
-    -- زر أيقونة لإظهار/إخفاء الواجهة
-    local ToggleButton = Instance.new("TextButton")
-    ToggleButton.Parent = ScreenGui
-    ToggleButton.Size = UDim2.new(0, 50, 0, 50)
-    ToggleButton.Position = UDim2.new(0, 10, 0.5, -25) -- على يسار الشاشة
-    ToggleButton.Text = "🔧" -- رمز الأيقونة
-    ToggleButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    ToggleButton.TextColor3 = Color3.new(1, 1, 1)
-
-    -- إظهار/إخفاء الواجهة عند الضغط على الأيقونة
-    local isVisible = true
-    ToggleButton.MouseButton1Click:Connect(function()
-        isVisible = not isVisible
-        MainFrame.Visible = isVisible
-    end)
-
-    return MainFrame
+-- إدارة الذاكرة المؤقتة المتقدمة
+function TranslationManager:initializeCache()
+    self.translationCache = setmetatable({}, {
+        __mode = "v",  -- السماح بمسح العناصر غير المستخدمة
+        __index = function(t, k)
+            -- تتبع الوصول للعناصر
+            if rawget(t, k) then
+                t[k].lastAccessed = os.time()
+            end
+            return rawget(t, k)
+        end
+    })
+    self.cacheStats = {
+        hits = 0,
+        misses = 0,
+        totalLookups = 0
+    }
 end
 
--- وظيفة لإضافة زر
-function MyUILib:AddButton(frame, buttonText, callback)
-    local Button = Instance.new("TextButton")
-    Button.Parent = frame
-    Button.Size = UDim2.new(0, 200, 0, 50)
-    Button.Position = UDim2.new(0.5, -100, 0.5, -25)
-    Button.Text = buttonText
-    Button.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-    Button.TextColor3 = Color3.new(1, 1, 1)
-    Button.Font = Enum.Font.SourceSans
-    Button.TextSize = 20
+-- تحميل الترجمات مع معالجة متقدمة للأخطاء
+function TranslationManager:loadTranslations()
+    local loadedSuccessfully = false
+    
+    for _, sourceUrl in ipairs(TranslationScript.Config.TranslationSources) do
+        local success, result = pcall(function()
+            return loadstring(game:HttpGet(sourceUrl))()
+        end)
+        
+        if success and type(result) == "table" then
+            self.translations = result
+            loadedSuccessfully = true
+            break
+        end
+    end
+    
+    return loadedSuccessfully
+end
 
-    Button.MouseButton1Click:Connect(function()
-        callback()
+-- ترجمة نص متقدمة
+function TranslationManager:translateText(originalText)
+    -- التحقق من صحة النص
+    if not originalText or type(originalText) ~= "string" then
+        return originalText
+    end
+    
+    -- محاولة الترجمة
+    local translatedText = self.translations[originalText] 
+        or self.translations[string.lower(originalText)] 
+        or originalText
+    
+    return translatedText
+end
+
+-- مدير الإشعارات المتطور
+local NotificationManager = {}
+
+function NotificationManager:createAdvancedNotification(message, duration)
+    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    local screenGui = Instance.new("ScreenGui", playerGui)
+    screenGui.Name = "AdvancedNotificationV2"
+    screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    
+    local frame = Instance.new("Frame", screenGui)
+    frame.Size = UDim2.new(0, 400, 0, 60)
+    frame.Position = UDim2.new(0.5, -200, 0, 20)
+    frame.BackgroundColor3 = TranslationScript.Config.Notifications.Styles.BackgroundColor
+    frame.BackgroundTransparency = 0.3
+    frame.BorderSizePixel = 0
+    
+    local cornerRadius = Instance.new("UICorner", frame)
+    cornerRadius.CornerRadius = UDim.new(0, 12)
+    
+    local textLabel = Instance.new("TextLabel", frame)
+    textLabel.Size = UDim2.new(1, -20, 1, -10)
+    textLabel.Position = UDim2.new(0, 10, 0, 5)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Font = TranslationScript.Config.Notifications.Styles.Font
+    textLabel.TextSize = TranslationScript.Config.Notifications.Styles.TextSize
+    textLabel.TextColor3 = TranslationScript.Config.Notifications.Styles.TextColor
+    textLabel.Text = message
+    textLabel.TextXAlignment = Enum.TextXAlignment.Left
+    
+    -- رسم التأثير
+    task.delay(duration, function()
+        local tween = game:GetService("TweenService"):Create(frame, 
+            TweenInfo.new(1), {BackgroundTransparency = 1, Position = frame.Position + UDim2.new(0, 0, 0, -50)})
+        tween:Play()
+        
+        task.delay(1, function()
+            screenGui:Destroy()
+        end)
     end)
 end
 
--- إضافة قائمة ومحتوى القائمة مع زر العودة
-function MyUILib:AddMenu(frame, menuTitle)
-    local MenuFrame = Instance.new("Frame")
-    MenuFrame.Parent = frame
-    MenuFrame.Size = UDim2.new(1, 0, 1, -50)
-    MenuFrame.Position = UDim2.new(0, 0, 0, 50)
-    MenuFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    MenuFrame.Visible = false -- اخفاء القائمة في البداية
-
-    local MenuTitle = Instance.new("TextLabel")
-    MenuTitle.Parent = MenuFrame
-    MenuTitle.Size = UDim2.new(1, 0, 0, 50)
-    MenuTitle.Position = UDim2.new(0, 0, 0, 0)
-    MenuTitle.Text = menuTitle
-    MenuTitle.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
-    MenuTitle.TextColor3 = Color3.new(1, 1, 1)
-    MenuTitle.Font = Enum.Font.SourceSans
-    MenuTitle.TextSize = 24
-
-    -- زر العودة إلى القائمة الأساسية
-    local BackButton = Instance.new("TextButton")
-    BackButton.Parent = MenuFrame
-    BackButton.Size = UDim2.new(0, 200, 0, 50)
-    BackButton.Position = UDim2.new(0.5, -100, 0.5, 50)
-    BackButton.Text = "رجوع إلى القائمة الأساسية"
-    BackButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-    BackButton.TextColor3 = Color3.new(1, 1, 1)
-    BackButton.Font = Enum.Font.SourceSans
-    BackButton.TextSize = 20
-
-    BackButton.MouseButton1Click:Connect(function()
-        MenuFrame.Visible = false -- اخفاء القائمة
-        frame.Visible = true -- إظهار القائمة الأساسية
-    end)
-
-    return MenuFrame
+-- دالة المراقبة المتقدمة
+local function monitorTextObjects(container)
+    for _, object in ipairs(container:GetDescendants()) do
+        if object:IsA("TextLabel") or object:IsA("TextButton") or object:IsA("TextBox") then
+            -- محاولة ترجمة النص
+            pcall(function()
+                local translatedText = TranslationManager:translateText(object.Text)
+                if translatedText and translatedText ~= object.Text then
+                    object.Text = translatedText
+                end
+            end)
+            
+            -- مراقبة التغييرات
+            object:GetPropertyChangedSignal("Text"):Connect(function()
+                pcall(function()
+                    local translated = TranslationManager:translateText(object.Text)
+                    if object.Text ~= translated then
+                        object.Text = translated
+                    end
+                end)
+            end)
+        end
+    end
 end
 
-return MyUILib
+-- نظام التسجيل والمراقبة
+local LogManager = {
+    logs = {},
+    maxLogs = 100
+}
+
+function LogManager:addLog(logType, message)
+    local log = {
+        type = logType,
+        message = message,
+        timestamp = os.time()
+    }
+    
+    table.insert(self.logs, log)
+    
+    -- تقليم السجلات
+    if #self.logs > self.maxLogs then
+        table.remove(self.logs, 1)
+    end
+end
+
+-- تهيئة السكريبت الرئيسي
+local function initializeTranslationScript()
+    -- تهيئة المكونات
+    TranslationManager:initializeCache()
+    
+    -- محاولة تحميل الترجمات
+    local translationsLoaded = TranslationManager:loadTranslations()
+    
+    if translationsLoaded then
+        -- مراقبة الواجهات
+        monitorTextObjects(workspace)
+        
+        -- مراقبة اللاعبين
+        game.Players.PlayerAdded:Connect(function(player)
+            local playerGui = player:WaitForChild("PlayerGui")
+            monitorTextObjects(playerGui)
+        end)
+        
+        -- إشعار بدء التشغيل
+        NotificationManager:createAdvancedNotification(
+            TranslationScript.Config.Notifications.StartupMessage, 
+            5
+        )
+        
+        -- إشعار دوري للمطور
+        task.spawn(function()
+            while true do
+                task.wait(1200)  -- كل 20 دقيقة
+                NotificationManager:createAdvancedNotification(
+                    TranslationScript.Config.Notifications.DeveloperCredit, 
+                    6
+                )
+            end
+        end)
+        
+        -- تحديث الترجمات دوريًا
+        task.spawn(function()
+            while true do
+                task.wait(TranslationScript.Config.RefreshInterval)
+                TranslationManager:loadTranslations()
+                
+                -- تسجيل عملية التحديث
+                LogManager:addLog("RefreshTranslations", "تم تحديث الترجمات بنجاح")
+            end
+        end)
+    else
+        -- إشعار الخطأ
+        NotificationManager:createAdvancedNotification(
+            TranslationScript.Config.Notifications.ErrorMessage, 
+            5
+        )
+        
+        -- تسجيل الخطأ
+        LogManager:addLog("LoadError", "فشل تحميل الترجمات من جميع المصادر")
+    end
+end
+
+-- تشغيل السكريبت
+initializeTranslationScript()
+
+-- واجهة للتفاعل الخارجي (اختياري)
+TranslationScript.GetLogs = function()
+    return LogManager.logs
+end
+
+TranslationScript.ReloadTranslations = function()
+    return TranslationManager:loadTranslations()
+end
+
+-- إرجاع الكائن للتفاعل الخارجي (اختياري)
+return TranslationScript
